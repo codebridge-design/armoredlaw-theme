@@ -1,0 +1,154 @@
+.hero {
+  position: relative;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: @color-white;
+  overflow: hidden;
+
+  &__overlay {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  &__inner {
+    position: relative;
+    z-index: 1;
+  }
+
+  &__eyebrow {
+    font-size: clamp(@font-body-size, 1.8vw, @font-sub-20);
+    font-family: "Barlow Bold", sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin: 0 0 20px;
+  }
+
+  &__title {
+    font-size: clamp(@font-sub-32, 4.8vw, @font-h1);
+    text-transform: uppercase;
+    margin: 0 0 15px;
+  }
+
+  &__subtitle {
+    font-size: clamp(@font-body-size, 1.8vw, @font-sub-20);
+    margin: 0 0 40px;
+  }
+
+  &__actions {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  &__btn {
+    min-width: 150px;
+  }
+}
+
+.hero-features {
+  &__inner {
+    display: flex;
+    justify-content: center;
+  }
+
+  &__item {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  &__label {
+    font-family: "Barlow Bold", sans-serif;
+    font-weight: 500;
+    font-size: @font-body-size;
+    white-space: nowrap;
+    text-transform: uppercase;
+  }
+
+  &__icon {
+    img {
+      object-fit: contain;
+      display: block;
+      width: 30px;
+      height: 30px;
+    }
+  }
+}
+
+//
+//  Mobile
+//  _____________________________________________
+
+@media (max-width: 767px) {
+  .hero {
+    padding: 60px 0;
+
+    &__overlay {
+      background: linear-gradient(
+        90deg,
+        rgba(0, 0, 0, 0.8) 0%,
+        rgba(0, 0, 0, 0.4) 60%,
+        rgba(0, 0, 0, 0.2) 100%
+      );
+    }
+
+    &__content {
+      max-width: 100%;
+    }
+  }
+}
+
+@media (max-width: 1023px) {
+  .hero-features {
+    position: relative;
+    margin-top: 30px;
+
+    &__inner {
+      flex-direction: column;
+      gap: 30px;
+    }
+  }
+}
+
+//
+//  Desktop
+//  _____________________________________________
+
+@media (min-width: 768px) {
+  .hero {
+    padding: 160px 0;
+
+    &__overlay {
+      height: 300px;
+      background: linear-gradient(180deg, #000 0%, rgba(0, 0, 0, 0.00) 100%);
+    }
+
+    &__content {
+      max-width: 560px;
+    }
+  }
+}
+
+@media (min-width: 1024px) {
+  .hero-features {
+    position: absolute;
+    bottom: 0;
+    padding: 50px 0;
+    left: 50%;
+    transform: translateX(-50%);
+
+    &__item {
+      &:not(:last-child) {
+        border-right: 1px solid rgba(255, 255, 255, 0.2);
+        padding-right: 55px;
+        margin-right: 55px;
+      }
+    }
+
+    &__inner {
+      align-items: center;
+    }
+  }
+}

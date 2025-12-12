@@ -1,0 +1,254 @@
+// ===========================
+// Testimonials section
+// ===========================
+
+.testimonials {
+  position: relative;
+  color: @color-white;
+  background-color: @color-dark1;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+
+  &__overlay {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+            circle at center,
+            fade(@color-black, 35%) 0,
+            fade(@color-black, 75%) 60%,
+            fade(@color-black, 90%) 100%
+    );
+    pointer-events: none;
+  }
+
+  &__inner {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+  }
+
+  // top header
+  &__header {
+    margin: 0 0 60px;
+  }
+
+  &__eyebrow {
+    font-family: @font-heading;
+    font-weight: 700;
+    font-size: @font-body-size;
+    letter-spacing: 3.2px;
+    text-transform: uppercase;
+    color: @color-gold;
+    margin: 0 0 5px;
+  }
+
+  &__title {
+    font-family: @font-heading;
+    font-weight: 700;
+    font-size: clamp(@font-sub-32, 4vw, @font-h2);
+    text-transform: uppercase;
+    margin: 0 0 @space-md;
+  }
+
+  // google reviews row
+  &__reviews {
+    display: inline-flex;
+    align-items: center;
+    gap: @space-md;
+    margin-top: @space-md;
+  }
+
+  &__reviews-avatars img {
+    display: block;
+    height: 40px;
+    width: auto;
+  }
+
+  &__reviews-main {
+    display: flex;
+    align-items: center;
+    gap: @space-md;
+  }
+
+  &__reviews-google-logo {
+    display: block;
+    height: 40px;
+    width: auto;
+  }
+
+  &__reviews-stars img {
+    display: block;
+    height: 14px;
+    width: auto;
+  }
+
+  &__reviews-text {
+    font-size: 15px;
+    white-space: nowrap;
+    margin: 5px 0 0;
+  }
+
+  // slider wrapper
+  &__slider {
+    margin-top: @space-xl;
+  }
+
+  &__dots {
+    margin-top: @space-lg;
+    display: flex;
+    justify-content: center;
+  }
+}
+
+// ===========================
+// Testimonial card (slide)
+// ===========================
+
+.testimonial-card {
+  background-color: @color-white;
+  color: @color-dark2;
+  border-radius: 18px;
+  padding: @space-lg @space-lg @space-lg;
+  box-shadow: 0 18px 40px fade(@color-black, 35%);
+  text-align: left;
+  min-height: 220px;
+  display: flex !important;      // на випадок slick
+  flex-direction: column;
+  justify-content: space-between;
+
+  @media (max-width: 768px) {
+    padding: @space-md @space-md @space-lg;
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: @space-md;
+    margin-bottom: @space-sm;
+  }
+
+  &__author {
+    display: flex;
+    align-items: center;
+    gap: @space-sm;
+  }
+
+  &__avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+
+    img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  &__author-meta {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__name {
+    font-family: @font-heading;
+    font-weight: 700;
+    font-size: @font-body-size;
+    margin-bottom: 2px;
+  }
+
+  &__location {
+    font-size: @font-body-size-mob;
+    color: fade(@color-dark2, 70%);
+  }
+
+  &__source img {
+    display: block;
+    height: 22px;
+    width: auto;
+  }
+
+  &__rating {
+    margin: @space-sm 0;
+    color: @color-accent;
+    font-size: 16px;
+
+    .testimonial-card__star {
+      margin-right: 2px;
+    }
+  }
+
+  &__text {
+    font-size: @font-body-size;
+    line-height: 1.6;
+    color: fade(@color-dark2, 85%);
+    margin-top: @space-sm;
+
+    @media (max-width: 768px) {
+      font-size: @font-body-size-mob;
+    }
+  }
+}
+
+// ===========================
+// Slider dots (generic, під slick)
+// ===========================
+
+.testimonials__dots {
+  ul,
+  .slick-dots {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: inline-flex;
+    gap: 8px;
+  }
+
+  li {
+    margin: 0;
+    padding: 0;
+  }
+
+  button {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: none;
+    padding: 0;
+    background-color: fade(@color-white, 35%);
+    font-size: 0;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+  }
+
+  .slick-active button {
+    background-color: @color-red;
+    transform: scale(1.2);
+  }
+}
+
+//
+//  Mobile
+//  _____________________________________________
+
+@media (max-width: 767px) {
+  .testimonials {
+    padding: 50px 0;
+  }
+}
+
+//
+//  Desktop
+//  _____________________________________________
+
+@media (min-width: 768px) {
+  .testimonials {
+    padding: 150px 0;
+  }
+}

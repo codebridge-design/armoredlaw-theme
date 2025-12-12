@@ -1,0 +1,181 @@
+// =====================================
+// Armored Law – Design Tokens (LESS)
+// =====================================
+
+// Colors
+@color-red:     #B22029;
+@color-black:   #000000;
+@color-dark1:   #020406;
+@color-dark2:   #01050B;
+@color-accent:  #FFD674;
+@color-white:   #ffffff;
+@color-bg:      #ffffff;
+@color-gold:    #E1C47E;
+
+// Typography
+@font-heading: "Barlow", sans-serif;
+@font-body:    "Lato", sans-serif;
+
+// Font sizes
+@font-h1:            64px;
+@font-h2:            48px;
+@font-h3:            40px;
+@font-sub-32:        32px;
+@font-sub-24:        24px;
+@font-sub-20:        20px;
+@font-p1:            20px;
+@font-body-size:     16px;
+@font-body-size-mob: 14px;
+
+// Spacing
+@space-xs: 4px;
+@space-sm: 8px;
+@space-md: 16px;
+@space-lg: 24px;
+@space-xl: 32px;
+
+// Container
+@container-max-width: 1200px;
+@container-padding-x: 16px;
+
+// ===========================
+// Global reset-ish
+// ===========================
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: @font-body;
+  font-size: @font-body-size;
+  color: @color-dark2;
+  margin: 0;
+  padding: 0;
+}
+
+// ===========================
+// Typography helpers
+// ===========================
+
+
+// Headings → Barlow Bold
+h1, .h1,
+h2, .h2,
+h3, .h3,
+.sub-24,
+.sub-20 {
+  font-family: @font-heading;
+  font-weight: 700;
+}
+
+// ===========================
+// Buttons (base)
+// ===========================
+
+.btn,
+.button,
+.wp-block-button__link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  text-decoration: none;
+  font-family: @font-heading;
+  font-weight: 700;
+  font-size: @font-body-size;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+
+  span {
+    position: relative;
+    padding-right: 15px;
+
+    &:after {
+      content: '';
+      position: absolute;
+      -webkit-mask-image: url('../../img/arrow.svg');
+      -webkit-mask-size: contain;
+      -webkit-mask-repeat: no-repeat;
+      mask-image: url('../../img/arrow.svg');
+      mask-size: contain;
+      mask-repeat: no-repeat;
+      transition: background-color 0.2s ease;
+      top: 61%;
+      transform: translateY(-50%);
+      right: 0;
+      height: 8px;
+      width: 10px;
+    }
+  }
+}
+
+.btn--primary,
+.button--primary {
+  background-color: @color-red;
+  color: @color-white;
+  border: 1px solid @color-red;
+
+  span {
+    &:after {
+      background-color: @color-white;
+    }
+  }
+
+  &:hover {
+    background-color: transparent;
+    color: @color-red;
+
+    span {
+      &:after {
+        background-color: @color-red;
+      }
+    }
+  }
+}
+
+.btn--secondary,
+.button--secondary {
+  background-color: @color-white;
+  color: @color-black;
+  border: 1px solid @color-white;
+
+  span {
+    &:after {
+      background-color: @color-black;
+    }
+  }
+
+  &:hover {
+    background-color: transparent;
+    color: @color-white;
+
+    span {
+      &:after {
+        background-color: @color-white;
+      }
+    }
+  }
+}
+
+// ===========================
+// Layout helpers
+// ===========================
+
+.container,
+.container-strong {
+  width: 100%!important;
+  max-width: 1280px!important;
+  padding-left: 24px!important;
+  padding-right: 24px!important;
+  margin: 0 auto!important;
+}
