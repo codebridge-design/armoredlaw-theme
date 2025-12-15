@@ -3,10 +3,15 @@ get_header();
 ?>
 
 <main id="content" class="site-content">
-	<?php get_template_part( 'template-parts/hero' ); ?>
+	<?php
+	while ( have_posts() ) :
+		the_post();
 
-	<?php get_template_part( 'template-parts/home-steps' ); ?>
-	<?php get_template_part( 'template-parts/testimonials' ); ?>
+		get_template_part( 'template-parts/hero' );
+
+		the_content();
+	endwhile;
+	?>
 </main>
 
 <?php

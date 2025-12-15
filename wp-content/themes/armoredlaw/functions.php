@@ -75,6 +75,19 @@ function armoredlaw_theme_setup() {
 }
 add_action( 'after_setup_theme', 'armoredlaw_theme_setup' );
 
-
 //(optional) remove the admin bar on the front
 add_filter( 'show_admin_bar', '__return_false' );
+
+// Reciprocity map shortcode
+add_shortcode('armoredlaw_map', function () {
+  ob_start();
+  get_template_part('template-parts/reciprocity-map');
+  return ob_get_clean();
+});
+
+// Testimonials shortcode
+add_shortcode('armoredlaw_testimonials', function () {
+	ob_start();
+	get_template_part('template-parts/testimonials');
+	return ob_get_clean();
+});

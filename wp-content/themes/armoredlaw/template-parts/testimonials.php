@@ -7,11 +7,6 @@ $reviews_avatars_image  = get_field( 'reviews_avatars_image', 'option' );
 $reviews_stars_image    = get_field( 'reviews_stars_image', 'option' );
 $reviews_text           = get_field( 'reviews_text', 'option' );
 
-
-if ( ! $show_on_page ) {
-    return;
-}
-
 $bg_style = '';
 if ( $bg_image ) {
 	$bg_style = sprintf(

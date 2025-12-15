@@ -60,6 +60,10 @@ body {
   padding: 0;
 }
 
+p {
+  margin: 0;
+}
+
 // ===========================
 // Typography helpers
 // ===========================
@@ -145,23 +149,54 @@ h3, .h3,
 
 .btn--secondary,
 .button--secondary {
-  background-color: @color-white;
-  color: @color-black;
+  background-color: @color-black;
+  color: @color-white;
   border: 1px solid @color-white;
 
   span {
     &:after {
-      background-color: @color-black;
+      background-color: @color-white;
     }
   }
 
   &:hover {
     background-color: transparent;
-    color: @color-white;
+    color: @color-red;
+    border: 1px solid @color-red;
 
     span {
       &:after {
-        background-color: @color-white;
+        background-color: @color-red;
+      }
+    }
+  }
+}
+
+.btn--back,
+.button--back {
+  background-color: @color-black;
+  color: @color-white;
+  border: 1px solid @color-black;
+
+  span {
+    padding-right: 0;
+    padding-left: 15px;
+
+    &:after {
+      background-color: @color-white;
+      transform: translateY(-50%) rotate(180deg);
+      left: 0;
+      top: 58%;
+    }
+  }
+
+  &:hover {
+    background-color: transparent;
+    color: @color-black;
+
+    span {
+      &:after {
+        background-color: @color-black;
       }
     }
   }
@@ -178,4 +213,10 @@ h3, .h3,
   padding-left: 24px!important;
   padding-right: 24px!important;
   margin: 0 auto!important;
+}
+
+.image-obj-fit {
+  img {
+    object-fit: cover!important;
+  }
 }

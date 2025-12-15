@@ -95,13 +95,47 @@ jQuery(function ($) {
         $slider.slick({
             dots: true,
             arrows: true,
-            autoplay: false,
-            autoplaySpeed: 5000,
-            speed: 400,
             adaptiveHeight: true,
-            pauseOnHover: true,
-            infinite: false,
-            slidesToShow: 3
+            slidesToShow: 3,
+            responsive: [
+                {
+                    breakpoint: 768,
+                    settings: {
+                        slidesToShow: 2
+                    }
+                },
+                {
+                    breakpoint: 480,
+                    settings: {
+                        slidesToShow: 1
+                    }
+                }
+            ]
         });
     }
 });
+
+//Function fot Reciprocity Map
+(function () {
+    const states = [
+        ["AL","Alabama"],["AK","Alaska"],["AZ","Arizona"],["AR","Arkansas"],["CA","California"],
+        ["CO","Colorado"],["CT","Connecticut"],["DE","Delaware"],["FL","Florida"],["GA","Georgia"],
+        ["HI","Hawaii"],["ID","Idaho"],["IL","Illinois"],["IN","Indiana"],["IA","Iowa"],
+        ["KS","Kansas"],["KY","Kentucky"],["LA","Louisiana"],["ME","Maine"],["MD","Maryland"],
+        ["MA","Massachusetts"],["MI","Michigan"],["MN","Minnesota"],["MS","Mississippi"],["MO","Missouri"],
+        ["MT","Montana"],["NE","Nebraska"],["NV","Nevada"],["NH","New Hampshire"],["NJ","New Jersey"],
+        ["NM","New Mexico"],["NY","New York"],["NC","North Carolina"],["ND","North Dakota"],["OH","Ohio"],
+        ["OK","Oklahoma"],["OR","Oregon"],["PA","Pennsylvania"],["RI","Rhode Island"],["SC","South Carolina"],
+        ["SD","South Dakota"],["TN","Tennessee"],["TX","Texas"],["UT","Utah"],["VT","Vermont"],
+        ["VA","Virginia"],["WA","Washington"],["WV","West Virginia"],["WI","Wisconsin"],["WY","Wyoming"],
+        ["DC","District of Columbia"]
+    ];
+
+    const select = document.getElementById("alStateSelect");
+    const mapWrap = document.getElementById("alMapWrap");
+    if (!select || !mapWrap) return;
+
+    select.innerHTML = `<option value="">Select State</option>` + states
+        .map(([code,name]) => `<option value="${code}">${name}</option>`)
+        .join("");
+})();

@@ -1,0 +1,139 @@
+.al-map-block {
+  display: flex;
+
+  &__wrapper {
+    background-color: @color-black;
+  }
+
+  &__text {
+    margin-bottom: 50px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  &__eyebrow {
+    color: @color-red;
+    font-size: @font-body-size;
+    font-family: @font-heading;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  &__title {
+    color: @color-white;
+    font-size: clamp(@font-sub-32, 4vw, @font-h2);
+    line-height: 60px;
+    text-transform: uppercase;
+    margin: 0;
+  }
+
+  &__subtitle {
+    font-weight: 600;
+    color: #C3D6FF;
+  }
+}
+
+.al-map-ui {
+  background: #F4FAFF;
+  padding: 30px 30px 30px;
+  border-radius: 20px;
+
+  .al-buttons {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+.al-select-wrap {
+  position: relative;
+  width: 260px;
+}
+
+.al-select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+
+  width: 100%;
+  padding: 14px 44px 14px 16px;
+  font-size: 16px;
+  font-weight: 500;
+
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+
+  color: #111;
+  cursor: pointer;
+
+  &:hover {
+    border-color: #d1d5db;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: #d72626;
+    box-shadow: 0 0 0 2px rgba(215, 38, 38, 0.15);
+  }
+}
+
+.al-select-wrap {
+  width: 100%;
+  margin-bottom: 24px;
+
+  &:after {
+    content: "";
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    width: 12px;
+    height: 12px;
+    pointer-events: none;
+    transform: translateY(-50%) rotate(90deg);
+    background: url('../../img/arrow-form.svg')
+    no-repeat center / contain;
+  }
+}
+
+//
+//  Mobile
+//  _____________________________________________
+
+@media (max-width: 767px) {
+  .al-map-block {
+    flex-direction: column;
+
+    &__wrapper {
+      padding: 50px 0;
+    }
+
+    &__content {
+      margin-bottom: 50px;
+    }
+  }
+}
+
+//
+//  Desktop
+//  _____________________________________________
+
+@media (min-width: 768px) {
+  .al-map-block {
+    gap: 80px;
+    align-items: center;
+    justify-content: space-between;
+
+    &__wrapper {
+      padding: 100px 0;
+    }
+
+    &__content {
+      flex: 0.5;
+    }
+  }
+
+  .al-map-wrap {
+    flex: 1;
+  }
+}
