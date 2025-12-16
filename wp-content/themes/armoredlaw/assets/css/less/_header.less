@@ -38,6 +38,26 @@
       margin: 0;
       padding: 0;
 
+      .current_page_item {
+        a {
+          position: relative;
+
+          &:hover {
+            color: @color-white;
+          }
+
+          &:after {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: -4px;
+            height: 1px;
+            background-color: @color-white;
+          }
+        }
+      }
+
       a {
         font-family: @font-heading;
         text-transform: uppercase;

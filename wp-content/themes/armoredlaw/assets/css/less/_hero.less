@@ -22,7 +22,7 @@
     font-family: "Barlow Bold", sans-serif;
     font-weight: 700;
     text-transform: uppercase;
-    margin: 0 0 20px;
+    margin: 0 0 12px;
   }
 
   &__title {
@@ -33,7 +33,7 @@
 
   &__subtitle {
     font-size: clamp(@font-body-size, 1.8vw, @font-sub-20);
-    margin: 0 0 40px;
+    margin: 0 0 30px;
   }
 
   &__actions {
@@ -127,6 +127,10 @@
 
     &__content {
       max-width: 560px;
+
+      .page-template-page-hero-elementor & {
+        max-width: 700px;
+      }
     }
   }
 }

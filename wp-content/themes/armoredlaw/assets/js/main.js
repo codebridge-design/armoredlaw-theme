@@ -88,7 +88,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
-
 jQuery(function ($) {
     const $slider = $('.js-testimonials-slider');
     if ($slider.length) {
