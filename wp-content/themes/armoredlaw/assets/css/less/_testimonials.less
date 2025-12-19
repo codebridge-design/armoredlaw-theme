@@ -11,6 +11,25 @@
   background-repeat: no-repeat;
   overflow: hidden;
 
+  &:before {
+    content:"";
+    position:absolute;
+    left:0;
+    right:0;
+    top: 0;
+    height:280px;
+    pointer-events:none;
+    z-index:0;
+    background: linear-gradient(
+      to top,
+      rgba(1,5,11,0) 0%,
+      rgba(1,5,11,.25) 25%,
+      rgba(1,5,11,.55) 55%,
+      rgba(1,5,11,.85) 80%,
+      rgba(1,5,11,1) 100%
+    );
+  }
+
   &__overlay {
     position: absolute;
     inset: 0;

@@ -1,0 +1,174 @@
+.memberpressproduct-template-default {
+  main {
+    width: 100%;
+    max-width: 570px;
+    padding-left: 24px;
+    padding-right: 24px;
+    margin: 0 auto;
+  }
+}
+
+.page-template-page-login,
+.page-template-page-forgot-password {
+  .mp_wrapper {
+    .mp-form-row label {
+      display: none !important;
+    }
+  }
+}
+
+.page-template-page-forgot-password {
+  h3 {
+    display: none;
+  }
+}
+
+.mepr-white-popup {
+  border-radius: 8px;
+}
+
+.al-auth {
+  .mepr_error,
+  .mepr_updated {
+    padding: 10px 10px 10px 15px !important;
+    border-radius: 8px;
+    margin-top: 25px;
+    color: @color-white;
+  }
+
+  .mepr_error {
+    background-color: @color-red !important;
+    border: 1px solid @color-red !important;
+  }
+
+  .mepr_updated {
+    background-color: #4d8c2e !important;
+    border: 1px solid #4d8c2e !important;
+  }
+
+  &__form {
+    margin-bottom: 20px;
+  }
+
+  &__alt {
+    text-align: center;
+  }
+
+  .mepr-login-actions {
+    text-align: center;
+  }
+
+  &__title {
+    font-family: @font-heading;
+    font-weight: 700;
+    font-size: clamp(@font-sub-20, 2.4vw, @font-sub-24);
+    text-align: center;
+    text-transform: uppercase;
+  }
+}
+
+.mp_wrapper {
+  .mp-form-label {
+    margin: 20px 0 5px;
+  }
+
+  .mp-form-row {
+    label {
+      font-family: @font-body;
+      font-size: @font-body-size;
+    }
+  }
+
+  textarea, select,
+  input[type=text],
+  input[type=url],
+  input[type=email],
+  input[type=tel],
+  input[type=number],
+  input[type=password] {
+    border-radius: 8px;
+    border: 1px solid #DBE7F2;
+    background: #FFF;
+    padding: 15px;
+    font-family: @font-body;
+    font-size: @font-body-size;
+
+    &:active,
+    &:focus {
+      border: 1px solid @color-red;
+    }
+  }
+
+  .mepr-submit,
+  .mepr-share-button,
+  .mepr-share-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    text-decoration: none;
+    font-family: @font-heading;
+    font-weight: 700;
+    font-size: @font-body-size;
+    text-transform: uppercase;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+    background-color: @color-red !important;
+    color: @color-white;
+    border: 1px solid @color-red !important;
+    width: 100%;
+
+    &:hover {
+      background-color: transparent !important;
+      color: @color-red!important;
+    }
+  }
+}
+
+//
+//  Mobile
+//  _____________________________________________
+
+@media (max-width: 767px) {
+  .memberpressproduct-template-default {
+    main {
+      margin-top: 50px;
+      margin-bottom: 50px;
+    }
+  }
+
+  .al-auth {
+    &__container {
+      margin: 50px 0;
+    }
+  }
+}
+
+//
+//  Desktop
+//  _____________________________________________
+
+@media (min-width: 768px) {
+  .memberpressproduct-template-default {
+    main {
+      margin-top: 100px;
+      margin-bottom: 100px;
+    }
+  }
+
+  .al-auth {
+    &__container {
+      max-width: 570px;
+      margin-left: auto;
+      margin-right: auto;
+      margin-top: 100px;
+      margin-bottom: 100px;
+    }
+
+    &__title {
+      margin-bottom: 60px;
+    }
+  }
+}

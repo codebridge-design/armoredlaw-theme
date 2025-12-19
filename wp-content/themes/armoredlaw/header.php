@@ -63,9 +63,27 @@ $header_cta_url  = get_field( 'header_cta_url', 'option' );
 					</nav>
 
 					<div class="site-header__actions">
-						<a href="<?php echo esc_url( '#login' ); ?>" class="btn btn--outline site-header__login">
-							<span>Login</span>
-						</a>
+						<?php
+            $login_page_id   = (int) get_option('mepr_login_page_id');
+            $account_page_id = (int) get_option('mepr_account_page_id');
+
+            $login_url   = $login_page_id   ? get_permalink($login_page_id)   : home_url('/login/');
+            $account_url = $account_page_id ? get_permalink($account_page_id) : home_url('/account/');
+            ?>
+
+            <?php if ( ! is_user_logged_in() ) : ?>
+              <a href="<?php echo esc_url($login_url); ?>" class="btn btn--outline site-header__login">
+                <span>Login</span>
+              </a>
+            <?php else : ?>
+              <a href="<?php echo esc_url($account_url); ?>" class="btn btn--outline site-header__login">
+                <span>My Account</span>
+              </a>
+            <?php endif; ?>
+
+
+
+
 
 						<a href="<?php echo esc_url( $header_cta_url ?: '#quote' ); ?>"
 	             class="btn btn--primary button--icon site-header__cta">

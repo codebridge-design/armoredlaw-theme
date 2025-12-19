@@ -91,3 +91,26 @@ add_shortcode('armoredlaw_testimonials', function () {
 	get_template_part('template-parts/testimonials');
 	return ob_get_clean();
 });
+
+// Membership pricing shortcode
+add_shortcode('armoredlaw_membership_pricing', function () {
+  ob_start();
+
+  if ( ! function_exists('get_field') ) {
+    return '';
+  }
+
+  get_template_part('template-parts/membership-pricing');
+
+  return ob_get_clean();
+});
+
+//Redirect Forgot password page
+add_action('template_redirect', function () {
+  if (is_admin() || wp_doing_ajax()) return;
+
+  if (is_page('login') && isset($_GET['action']) && $_GET['action'] === 'forgot_password') {
+    wp_safe_redirect( home_url('/forgot-password/?action=forgot_password') );
+    exit;
+  }
+});
