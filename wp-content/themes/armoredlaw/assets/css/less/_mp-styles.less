@@ -8,15 +8,6 @@
   }
 }
 
-.page-template-page-login,
-.page-template-page-forgot-password {
-  .mp_wrapper {
-    .mp-form-row label {
-      display: none !important;
-    }
-  }
-}
-
 .page-template-page-forgot-password {
   h3 {
     display: none;
@@ -68,14 +59,12 @@
 }
 
 .mp_wrapper {
-  .mp-form-label {
-    margin: 20px 0 5px;
-  }
-
   .mp-form-row {
-    label {
-      font-family: @font-body;
-      font-size: @font-body-size;
+    margin-bottom: 24px;
+
+    label:not(.mepr-checkbox-field) {
+      display: none !important;
+
     }
   }
 
@@ -125,6 +114,277 @@
       color: @color-red!important;
     }
   }
+
+  table.mepr-account-table {
+    th, td {
+      background-color: @color-white;
+      padding: 10px;
+    }
+
+    th {
+      text-align: left;
+    }
+
+    tr {
+      border: 1px solid #DBE7F2;
+    }
+
+    td {
+      border-left: unset;
+    }
+
+    .is-active,
+    .is-canceled,
+    .mepr-status {
+      position: relative;
+      padding-left: 20px;
+      padding-bottom: 2px;
+
+      &:before {
+        content: '';
+        position: absolute;
+        background-size: contain;
+        background-repeat: no-repeat;
+        top: 50%;
+        transform: translateY(-50%);
+        left: 0;
+        height: 16px;
+        width: 16px;
+      }
+    }
+
+    .is-active,
+    .is-paid {
+      &:before {
+        background-image: url('../../img/tick-circle-solid.svg');
+      }
+    }
+
+    .is-canceled,
+    .is-failed {
+      &:before {
+        background-image: url('../../img/canceled.svg');
+      }
+    }
+
+    .mepr-account-actions {
+      a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px 16px;
+        border-radius: 8px;
+        cursor: pointer;
+        text-decoration: none;
+        font-family: @font-heading;
+        font-weight: 700;
+        font-size: 12px;
+        text-transform: uppercase;
+        white-space: nowrap;
+        transition: all 0.2s ease;
+
+        &.mepr-account-renew {
+          background-color: @color-red;
+          color: @color-white;
+          border: 1px solid @color-red;
+
+          &:hover {
+            background-color: transparent;
+            color: @color-red;
+            border: 1px solid @color-red;
+          }
+        }
+
+        &.mepr-account-cancel {
+          background-color: transparent;
+          color: @color-black;
+          border: 1px solid @color-black;
+
+          &:hover {
+            background-color: @color-black;
+            color: @color-white;
+            border: 1px solid @color-black;
+          }
+        }
+      }
+    }
+  }
+}
+
+.mepr-nav-item {
+  padding: 20px;
+  border-radius: 8px;
+
+  a {
+    color: #0B0B0B;
+    font-family: @font-heading;
+    font-weight: 700;
+    letter-spacing: 0.32px;
+    line-height: 150%;
+    text-transform: uppercase;
+    text-decoration: none;
+    position: relative;
+    padding-left: 30px;
+
+    &:before {
+      content: '';
+      position: absolute;
+      mask-size: contain;
+      -webkit-mask-size: contain;
+      top: 50%;
+      transform: translateY(-50%);
+      left: 0;
+      height: 20px;
+      width: 20px;
+
+      background-color: #000000;
+    }
+  }
+
+  #mepr-account-logout {
+    &:before {
+      mask: url('../../img/logout.svg') no-repeat center;
+      -webkit-mask: url('../../img/logout.svg') no-repeat center;
+    }
+  }
+
+  &.mepr-active-nav-tab {
+    background: #FFF;
+
+    a {
+      &:before {
+        background-color: #175EA0;
+      }
+    }
+  }
+
+  &.mepr-active-nav-tab {
+    a {
+      color: #175EA0;
+    }
+  }
+
+  &.mepr-home {
+    a {
+      &:before {
+        mask: url('../../img/profile.svg') no-repeat center;
+        -webkit-mask: url('../../img/profile.svg') no-repeat center;
+      }
+    }
+  }
+
+  &.mepr-subscriptions {
+    a {
+      &:before {
+        mask: url('../../img/subscription.svg') no-repeat center;
+        -webkit-mask: url('../../img/subscription.svg') no-repeat center;
+      }
+    }
+  }
+
+  &.mepr-payments {
+    a {
+      &:before {
+        mask: url('../../img/payment.svg') no-repeat center;
+        -webkit-mask: url('../../img/payment.svg') no-repeat center;
+      }
+    }
+  }
+}
+
+.al-auth--account {
+  &__header {
+    margin-bottom: 24px;
+  }
+
+  &__title {
+    font-size: clamp(@font-sub-32, 4vw, @font-h2);
+    text-align: left;
+    margin: 0 0 10px;
+  }
+}
+
+.mepr-account-change-password {
+  margin-bottom: 20px;
+  display: block;
+}
+
+.al-account {
+  display: flex;
+  gap: 20px;
+
+  .mp_wrapper:nth-child(2),
+  #mepr-account-nav {
+    background: #F5F7F9;
+    border-radius: 20px;
+  }
+
+  #mepr-account-welcome-message {
+    display: none;
+  }
+
+  #mepr-account-nav {
+    ul {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0;
+    }
+  }
+
+  &__title {
+    font-size: @font-sub-20;
+    font-weight: 700 !important;
+    line-height: 29px;
+    margin: 0 0 15px;
+    text-transform: uppercase;
+  }
+
+  &__desc {
+    margin-bottom: 20px;
+  }
+
+  &__desc-bottom {
+    margin-bottom: 0;
+  }
+}
+
+.page-thank-you {
+  h1, h2:not(.elementor-heading-title) {
+    display: none;
+  }
+}
+
+.al-logout {
+  &__box {
+    text-align: center;
+  }
+
+  &__actions {
+    margin-top: 28px;
+  }
+
+  &__bottom {
+    margin-top: 75px;
+  }
+
+  h1 {
+    font-size: clamp(@font-sub-32, 3.4vw, 36px);
+    margin: 0 0 12px;
+  }
+
+  h2 {
+    font-size: @font-sub-20;
+    margin: 0 0 12px;
+  }
+}
+
+.mepr-account-terms,
+.mepr-account-subscr-id,
+.mepr-account-rebill {
+  color: #989898;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
 }
 
 //
@@ -144,6 +404,27 @@
       margin: 50px 0;
     }
   }
+
+  .al-auth--account {
+    &__container {
+      margin: 50px 0;
+    }
+  }
+
+  .al-account {
+    flex-direction: column;
+
+    .mp_wrapper:nth-child(2),
+    #mepr-account-nav {
+      padding: 20px;
+    }
+  }
+
+  .al-logout {
+      &__box {
+        margin: 50px 0;
+      }
+  }
 }
 
 //
@@ -158,17 +439,72 @@
     }
   }
 
-  .al-auth {
+  .page-template-page-login,
+  .page-template-page-forgot-password {
+    .al-auth {
+      &__container {
+        max-width: 570px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 100px;
+        margin-bottom: 100px;
+      }
+
+      &__title {
+        margin-bottom: 60px;
+      }
+    }
+  }
+
+  .al-auth--account {
     &__container {
-      max-width: 570px;
-      margin-left: auto;
-      margin-right: auto;
-      margin-top: 100px;
-      margin-bottom: 100px;
+      margin: 100px 0;
+    }
+  }
+
+  .al-account {
+    #mepr-account-nav {
+      padding: 20px;
     }
 
-    &__title {
-      margin-bottom: 60px;
+    .mp_wrapper {
+      &:first-child {
+        flex: 0.3;
+      }
+
+      &:nth-child(2) {
+        flex: 1;
+        padding: 40px;
+      }
+
+      .mp-form-row {
+        &.mepr_first_name {
+          margin-right: 10px;
+          float: left;
+        }
+
+        &.mepr_last_name {
+          float: right;
+        }
+
+        &.mepr_first_name,
+        &.mepr_last_name {
+          width: 48% !important;
+          z-index: 1;
+        }
+      }
+    }
+
+    #mepr-account-nav {
+      ul {
+        flex-direction: column;
+      }
+    }
+  }
+
+  .al-logout {
+    &__box {
+      margin: 100px 0;
     }
   }
 }

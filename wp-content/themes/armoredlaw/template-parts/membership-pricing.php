@@ -11,7 +11,7 @@ $title   = get_field('pricing_title', 'option');
 
 $default = get_field('billing_default', 'option') ?: 'monthly'; // monthly|yearly
 
-$plans = get_field('pricing_plans', 'option');
+$plans = get_field('pricing_table_plans', 'option');
 $rows  = get_field('pricing_rows', 'option');
 
 if ( empty($plans) || empty($rows) ) {
@@ -26,39 +26,11 @@ foreach ($plans as $p) {
   }
 }
 
-function al_mp_link($membership_post){
-  if (!$membership_post) return '#';
-  $id = is_object($membership_post) ? (int)$membership_post->ID : (int)$membership_post;
-  return $id ? get_permalink($id) : '#';
-}
-
-/**
- * Render single pricing cell (per plan, per row).
- * $cell is ACF group: ['type' => text|icon|empty, 'text' => '', 'icon' => check|cross|na]
- */
-function al_render_pricing_cell($cell) {
-  $type = $cell['type'] ?? 'empty';
-
-  if ($type === 'text') {
-    $t = trim((string)($cell['text'] ?? ''));
-    return $t !== ''
-      ? '<div class="pricing__value">'.esc_html($t).'</div>'
-      : '<div class="pricing__value">&nbsp;</div>';
-  }
-
-  if ($type === 'icon') {
-    $icon = $cell['icon'] ?? 'na'; // check|cross|na
-    return '<span class="pricing__icon pricing__icon--'.esc_attr($icon).'" aria-hidden="true"></span>';
-  }
-
-  return '<div class="pricing__value">&nbsp;</div>';
-}
-
 $monthly_label = get_field('billing_monthly_label','option') ?: 'Billed monthly';
 $yearly_label  = get_field('billing_yearly_label','option') ?: 'Annually';
 ?>
 
-<section class="pricing" data-billing="<?php echo esc_attr($default); ?>">
+<section class="pricing" id="membershipPricing" data-billing="<?php echo esc_attr($default); ?>">
 	<div class="container">
 	  <div class="pricing__head">
 	    <?php if($eyebrow): ?><div class="pricing__eyebrow"><?php echo esc_html($eyebrow); ?></div><?php endif; ?>

@@ -94,15 +94,29 @@ add_shortcode('armoredlaw_testimonials', function () {
 
 // Membership pricing shortcode
 add_shortcode('armoredlaw_membership_pricing', function () {
-  ob_start();
-
   if ( ! function_exists('get_field') ) {
     return '';
   }
 
+  ob_start();
   get_template_part('template-parts/membership-pricing');
-
   return ob_get_clean();
+});
+
+// Small Pricing Cards shortcode
+add_shortcode('armoredlaw_small_pricing', function () {
+  ob_start();
+  get_template_part('template-parts/small-pricing-cards');
+  return ob_get_clean();
+});
+
+require_once get_template_directory() . '/inc/membership-pricing-helpers.php';
+
+add_filter('body_class', function ($classes) {
+  if (is_page('thank-you')) {
+    $classes[] = 'page-thank-you';
+  }
+  return $classes;
 });
 
 //Redirect Forgot password page
