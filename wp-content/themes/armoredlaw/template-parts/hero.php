@@ -54,14 +54,14 @@ if ( is_array( $hero_bg_image ) && isset( $hero_bg_image['url'] ) ) {
 			<?php if ( $hero_primary_text || $hero_secondary_text ) : ?>
 				<div class="hero__actions">
 					<?php if ( $hero_primary_text ) : ?>
-						<a href="<?php echo esc_url( $hero_primary_url ); ?>"
+						<a href="<?= esc_url( home_url( '/' . ltrim( $hero_primary_url, '/' ) ) ); ?>"
 						   class="btn btn--secondary hero__btn hero__btn--secondary">
 							<span><?php echo esc_html( $hero_primary_text ); ?></span>
 						</a>
 					<?php endif; ?>
 
 					<?php if ( $hero_secondary_text ) : ?>
-						<a href="<?php echo esc_url( $hero_secondary_url ); ?>"
+						<a href="<?= esc_url( home_url( '/' . ltrim( $hero_primary_url, '/' ) ) ); ?>"
 						   class="btn btn--primary hero__btn hero__btn--primary">
 							<span><?php echo esc_html( $hero_secondary_text ); ?></span>
 						</a>
