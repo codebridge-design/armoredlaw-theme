@@ -1,0 +1,255 @@
+.blog-single {
+  &__hero {
+    margin-bottom: 36px;
+  }
+
+  &__title {
+    margin: 12px 0 16px;
+    font-family: @font-heading;
+    font-weight: 700;
+    font-size: clamp(@font-sub-32, 3.5vw, @font-h3);
+  }
+
+  &__meta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: @space-sm;
+    font-size: @font-body-size-mob;
+    line-height: 22.4px;
+  }
+
+  &__grid {
+    display: grid;
+    gap: 20px;
+    align-items: start;
+  }
+
+  &__content {
+    min-width: 0;
+
+    img {
+      width: 100%;
+    }
+  }
+}
+
+/* ===== Badge (category) ===== */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 7px 12px;
+  border-radius: 30px;
+  font-family: @font-heading;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  white-space: nowrap;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.badge--category {
+  background: @color-red;
+  color: @color-white;
+  border: 1px solid @color-red;
+
+  &:hover {
+    background: transparent;
+    color: @color-red;
+  }
+}
+
+.sidebar {
+  &__box {
+    background: #F5F7F9;
+    border-radius: 20px;
+    padding: 20px;
+    margin-bottom: 20px;
+
+    &--quicklinks {
+      a {
+        color: @color-black;
+        font-family: @font-heading;
+        font-size: @font-body-size-mob;
+        font-weight: 500;
+        line-height: 32px;
+        text-decoration: none;
+      }
+    }
+  }
+
+  &__title {
+    margin: 0 0 20px;
+    font-size: @font-sub-24;
+    font-weight: 700;
+    line-height: 32px;
+  }
+
+  &__search-input,
+  &__select {
+    width: 100%;
+    height: 42px;
+    border-radius: 12px;
+    border: 1px solid #DBE7F2;
+    outline: none;
+    background: @color-white;
+    color: #292D32;
+
+    &::placeholder {
+      color: #292D32;
+    }
+
+    &:focus {
+      border-color: fade(@color-black, 32%);
+    }
+  }
+
+  &__select {
+    padding: 10px 11px;
+  }
+
+  &__search-input {
+    padding: 10px 45px 10px 15px;
+  }
+
+  &__search {
+    position: relative;
+    margin-bottom: 13px;
+
+    &-btn {
+      height: 24px;
+      cursor: pointer;
+      position: absolute;
+      padding: 12px 15px 22px 8px;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      background: transparent;
+      border: unset;
+
+      &:after {
+        content: '';
+        display: block;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-image: url('../../img/search.svg');
+        height: 13px;
+        width: 13px;
+      }
+    }
+  }
+}
+
+.related-posts {
+  &__title {
+    font-size: @font-sub-24;
+    margin: 0 0 30px;
+  }
+
+  &__grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  &__card {
+    display: flex;
+    flex-direction: column;
+    border-radius: 20px;
+    text-decoration: none;
+    background: #F6FBFF;
+    padding: 20px;
+    gap: 20px;
+  }
+
+  &__thumb {
+    img {
+      width: 100%;
+      height: auto;
+      display: block;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      border-radius: 12px;
+    }
+  }
+
+  &__body {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__badge {
+    margin-bottom: 12px;
+  }
+
+  &__card-title {
+    margin: 0 0 10px;
+    font-size: @font-sub-24;
+    color: @color-black;
+  }
+
+  &__excerpt {
+    color: @color-black;
+    line-height: 24px;
+  }
+
+  &__bottom {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-between;
+  }
+
+  &__link {
+    font-size: 13px;
+    font-weight: 700;
+    margin-top: 12px;
+  }
+}
+
+//
+//  Mobile
+//  _____________________________________________
+
+@media (max-width: 767px) {
+  .blog-single {
+    padding: 50px 0;
+  }
+
+  .related-posts {
+    margin-top: 50px;
+
+    &__grid {
+      gap: 30px;
+    }
+  }
+}
+
+//
+//  Desktop
+//  _____________________________________________
+
+@media (min-width: 768px) {
+  .blog-single {
+    padding: 75px 0;
+
+    &__grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 300px;
+    }
+
+    &__sidebar {
+      position: sticky;
+      top: @space-lg;
+    }
+  }
+
+  .related-posts {
+    &__card {
+      margin-bottom: 30px;
+      width: ~'calc(100% / 3 - 10px)';
+    }
+  }
+}

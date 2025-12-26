@@ -1,0 +1,49 @@
+.breadcrumbs {
+  &__list {
+    list-style: none;
+    padding-left: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+    margin: 22px 0;
+  }
+
+  &__item {
+    position: relative;
+    &:not(:last-of-type) {
+      padding-right: 22px;
+
+      &:before {
+        content: '↠';
+        display: block;
+        position: absolute;
+        right: 0;
+        top: 3px;
+        font-size: 18px;
+        line-height: 1;
+      }
+    }
+
+    a {
+      color: @color-red;
+      text-decoration: none;
+    }
+  }
+
+  &__link {
+    font-family: @font-heading;
+    font-weight: 700;
+    font-size: 12px;
+    text-transform: uppercase;
+  }
+}
+
+//
+//  Mobile
+//  _____________________________________________
+
+@media (max-width: 480px) {
+  .breadcrumbs {
+    display: none;
+  }
+}

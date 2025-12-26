@@ -72,6 +72,10 @@ function armoredlaw_theme_setup() {
 			'footer_train'      => __( 'Footer Train & Learn Menu', 'armoredlaw' ),
 		)
 	);
+
+	register_nav_menus([
+    'blog_quick_links' => __('Blog Quick Links', 'armoredlaw'),
+  ]);
 }
 add_action( 'after_setup_theme', 'armoredlaw_theme_setup' );
 
