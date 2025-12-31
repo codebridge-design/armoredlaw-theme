@@ -113,3 +113,77 @@ jQuery(function ($) {
         });
     }
 });
+
+document.addEventListener('click', async (e) => {
+    const btn = e.target.closest('.blog-loadmore');
+    if (!btn) return;
+
+    const max = parseInt(btn.dataset.max || '1', 10);
+    const currentPage = parseInt(btn.dataset.page || '1', 10);
+    const nextPage = currentPage + 1;
+
+    if (nextPage > max) {
+        btn.remove();
+        return;
+    }
+
+    const grid = document.querySelector('.blog-cards');
+    if (!grid) {
+        btn.remove();
+        return;
+    }
+
+    const exclude = grid.dataset.exclude || '';
+    const contentType = grid.dataset.contentType || '';
+    const date = grid.dataset.date || '';
+    const search = grid.dataset.search || '';
+
+    btn.classList.add('is-loading');
+    btn.disabled = true;
+
+    const form = new FormData();
+    form.append('action', 'armoredlaw_load_more_posts');
+    form.append('page', String(nextPage));
+    form.append('exclude', exclude);
+    form.append('content_type', contentType);
+    form.append('date', date);
+    form.append('s', search);
+
+    form.append(
+        'nonce',
+        (window.armoredlawAjax && window.armoredlawAjax.nonce) ? window.armoredlawAjax.nonce : ''
+    );
+
+    try {
+        const url =
+            (window.armoredlawAjax && window.armoredlawAjax.url)
+                ? window.armoredlawAjax.url
+                : '/wp-admin/admin-ajax.php';
+
+        const res = await fetch(url, {
+            method: 'POST',
+            body: form,
+            credentials: 'same-origin',
+        });
+
+        const data = await res.json();
+
+        if (!data || !data.success || !data.data || !data.data.html) {
+            btn.remove();
+            return;
+        }
+
+        grid.insertAdjacentHTML('beforeend', data.data.html);
+        btn.dataset.page = String(nextPage);
+
+        if (nextPage >= max) {
+            btn.remove();
+        } else {
+            btn.classList.remove('is-loading');
+            btn.disabled = false;
+        }
+    } catch (err) {
+        btn.classList.remove('is-loading');
+        btn.disabled = false;
+    }
+});

@@ -81,10 +81,6 @@ $header_cta_url  = get_field( 'header_cta_url', 'option' );
               </a>
             <?php endif; ?>
 
-
-
-
-
 						<a href="<?php echo esc_url( $header_cta_url ?: '#quote' ); ?>"
 	             class="btn btn--primary button--icon site-header__cta">
 	             <span><?php echo esc_html( $header_cta_text ?: 'Get a Free Quote' ); ?></span>

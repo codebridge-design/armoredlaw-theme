@@ -1,0 +1,384 @@
+.quote {
+  &__head {
+    text-align: center;
+    padding-bottom: 60px;
+  }
+
+  &__title {
+    font-size: clamp(@font-sub-32, 4vw, @font-h2);
+    margin: 0 0 20px;
+  }
+  // grid
+  &__grid {
+    display: grid;
+    align-items: start;
+  }
+
+  &__left {
+    align-self: stretch;
+    min-height: 0;
+  }
+
+  &__left-bg {
+    height: 100%;
+    width: 100%;
+    border-radius: 16px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  // Step indicator
+  &__progress {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 42px;
+    user-select: none;
+
+    span {
+      font-family: @font-heading;
+      font-weight: 500;
+      font-size: 12px;
+      letter-spacing: 0.72px;
+      text-transform: uppercase;
+      color: #989898;
+      position: relative;
+
+      &:first-child {
+        padding-right: 16px;
+
+        &.is-active {
+          &:after {
+            background-color: #0B0B0B;
+          }
+        }
+
+        &:after {
+          content: '';
+          position: absolute;
+          top: 5px;
+          right: 0;
+          height: 7px;
+          width: 10px;
+          background-color: #989898;
+          -webkit-mask-image: url('../../img/arrow.svg');
+          -webkit-mask-size: contain;
+          -webkit-mask-repeat: no-repeat;
+          mask-image: url('../../img/arrow.svg');
+          mask-size: contain;
+          mask-repeat: no-repeat;
+        }
+      }
+    }
+
+    .is-active {
+      color: #0B0B0B;
+    }
+  }
+
+  // Steps wrappers
+  &__step {
+    h3 {
+      font-size: @font-sub-20;
+      text-transform: uppercase;
+      margin: 0 0 20px;
+    }
+
+    select, input {
+      padding: 15px 16px;
+      border-radius: 8px;
+      border: 2px solid #DBE7F2;
+      background: @color-white;
+      box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.25);
+      width: 100%;
+    }
+  }
+
+  &__fields {
+    input {
+      &:not(:last-child) {
+        margin-bottom: 24px;
+      }
+    }
+  }
+
+  &__plans {
+    .plan-btn {
+      min-width: 110px;
+    }
+  }
+
+  // Option groups (step 1)
+  &__options,
+  &__plans {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    margin: 0 0 30px;
+  }
+
+  // Buttons in options & plans
+  .opt-btn,
+  .plan-btn {
+    appearance: none;
+    background:#F5F7F9;
+    color: @color-black;
+    border-radius: 8px;
+    padding: 13px 20px;
+    font-family: @font-heading;
+    font-weight: 700;
+    font-size: @font-body-size-mob;
+    letter-spacing: 0.84px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+    line-height: 1;
+    border: none;
+    position: relative;
+
+    &:hover {
+      color: #FFFBFB;
+      background: @color-red;
+    }
+
+    &.is-active {
+      color: #FFFBFB;
+      background: @color-red;
+    }
+
+    &:focus-visible {
+      outline: none;
+    }
+  }
+
+  // Plan badge (Most Popular)
+  .badge {
+    position: absolute;
+    top: -9px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3px 8px;
+    border-radius: 4px;
+    background: #FFDC89;
+    color: @color-black;
+    font-family: @font-heading;
+    font-weight: 600;
+    font-size: 10px;
+    text-transform: uppercase;
+    vertical-align: middle;
+  }
+
+  // Checkbox row
+  &__checkbox {
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+    margin: 0 0 18px;
+    font-size: 13px;
+    color: rgba(0,0,0,.75);
+
+    input[type="checkbox"] {
+      margin-top: 0;
+      width: 16px;
+      height: 16px;
+      accent-color: @color-red;
+      cursor: pointer;
+      flex: 0 0 auto;
+    }
+
+    a {
+      color: #175EA0;
+      text-decoration: underline;
+
+      &:hover {
+        text-decoration: none;
+      }
+    }
+  }
+
+  // Actions row (Next/Back/Submit)
+  &__actions {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    justify-content: flex-start;
+    margin-top: 6px;
+
+    .btn {
+      span {
+        position: relative;
+        padding-right: 20px;
+
+        &:after {
+          content: '';
+          position: absolute;
+          top: 50%;
+          transform: translateY(-40%);
+          height: 9px;
+          width: 13px;
+          -webkit-mask-image: url('../../img/arrow.svg');
+          -webkit-mask-size: contain;
+          -webkit-mask-repeat: no-repeat;
+          mask-image: url('../../img/arrow.svg');
+          mask-size: contain;
+          mask-repeat: no-repeat;
+          transition: background-color 0.2s ease;
+        }
+      }
+
+      &-next {
+        border: 1px solid @color-black;
+
+        &:hover {
+          color: @color-red;
+          border-color: @color-red;
+
+          span {
+            &:after {
+              background-color: @color-red;
+            }
+          }
+        }
+
+        span {
+          &:after {
+            background-color: @color-black;
+            right: -3px;
+          }
+        }
+      }
+
+      &-back {
+        border: 1px solid @color-black;
+
+        &:hover {
+          color: @color-red;
+          border-color: @color-red;
+
+          span {
+            &:after {
+              background-color: @color-red;
+            }
+          }
+        }
+
+        span {
+          padding-right: 0;
+          padding-left: 20px;
+
+          &:after {
+            transform: translateY(-40%) rotate(180deg);
+            background-color: @color-black;
+            left: -3px;
+          }
+        }
+      }
+    }
+  }
+
+  // Error / info message under buttons
+  &__message {
+    margin-top: 12px;
+    font-size: 13px;
+    line-height: 1.35;
+
+    &[data-type="error"] {
+      color: rgba(229, 40, 54, 0.90);;
+    }
+
+    &[data-type="success"] {
+      color: #1a7f37;
+    }
+  }
+
+  &.is-step-3 {
+
+    .quote__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .quote__left,
+    .quote__progress,
+    .quote__head {
+      display: none;
+    }
+  }
+
+  // STEP 3 thank you
+  &__step[data-step="3"] {
+    text-align: center;
+
+    h2 {
+      margin: 0 0 15px;
+      font-size: clamp(@font-sub-32, 4vw, @font-h2);
+      text-transform: uppercase;
+    }
+
+    p {
+      line-height: 26px;
+      margin-bottom: 50px;
+    }
+
+    .quote__actions {
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 24px;
+    }
+  }
+}
+
+
+//
+//  Mobile
+//  _____________________________________________
+
+@media (max-width: 767px) {
+  .quote {
+    padding: 50px 0;
+
+    &__grid {
+      grid-template-columns: 1fr;
+      gap: 30px;
+    }
+
+    &__left {
+      min-height: 300px;
+    }
+  }
+}
+
+//
+//  Desktop
+//  _____________________________________________
+
+@media (min-width: 768px) {
+  .page-template-page-get-a-free-quote {
+    .hero {
+      &__content {
+        max-width: 700px;
+      }
+    }
+  }
+
+  .quote {
+    padding: 100px 0;
+
+    &__grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+    }
+  }
+}
+
+@media (min-width: 1024px) {
+  .quote {
+    &__grid {
+      gap: 90px;
+    }
+  }
+}

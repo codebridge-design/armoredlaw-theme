@@ -1,16 +1,19 @@
 <?php
-$show_hero         = get_field( 'hero_enable' );
-$hero_eyebrow      = get_field( 'hero_eyebrow' );
-$hero_title        = get_field( 'hero_title' );
-$hero_subtitle     = get_field( 'hero_subtitle' );
-$hero_bg_image     = get_field( 'hero_bg_image' );
-$hero_primary_text = get_field( 'hero_primary_text' );
-$hero_primary_url  = get_field( 'hero_primary_url' );
-$hero_secondary_text = get_field( 'hero_secondary_text' );
-$hero_secondary_url  = get_field( 'hero_secondary_url' );
+$acf_context = $args['acf_context'] ?? null;
+$acf_source  = ($acf_context === 'option') ? 'option' : get_the_ID();
 
-if ( ! $show_hero ) {
-	return;
+$show_hero           = get_field('hero_enable', $acf_source);
+$hero_eyebrow        = get_field('hero_eyebrow', $acf_source);
+$hero_title          = get_field('hero_title', $acf_source);
+$hero_subtitle       = get_field('hero_subtitle', $acf_source);
+$hero_bg_image       = get_field('hero_bg_image', $acf_source);
+$hero_primary_text   = get_field('hero_primary_text', $acf_source);
+$hero_primary_url    = get_field('hero_primary_url', $acf_source);
+$hero_secondary_text = get_field('hero_secondary_text', $acf_source);
+$hero_secondary_url  = get_field('hero_secondary_url', $acf_source);
+
+if (!$show_hero) {
+  return;
 }
 
 $hero_bg_image_url = '';
@@ -21,7 +24,6 @@ if ( is_array( $hero_bg_image ) && isset( $hero_bg_image['url'] ) ) {
 	$hero_bg_image_url = $hero_bg_image;
 }
 ?>
-
 
 <section class="hero"<?php if ( $hero_bg_image_url ) : ?>
 	style="background-image: url('<?php echo esc_url( $hero_bg_image_url ); ?>');"
@@ -61,7 +63,7 @@ if ( is_array( $hero_bg_image ) && isset( $hero_bg_image['url'] ) ) {
 					<?php endif; ?>
 
 					<?php if ( $hero_secondary_text ) : ?>
-						<a href="<?= esc_url( home_url( '/' . ltrim( $hero_primary_url, '/' ) ) ); ?>"
+						<a href="<?= $hero_secondary_url; ?>"
 						   class="btn btn--primary hero__btn hero__btn--primary">
 							<span><?php echo esc_html( $hero_secondary_text ); ?></span>
 						</a>
