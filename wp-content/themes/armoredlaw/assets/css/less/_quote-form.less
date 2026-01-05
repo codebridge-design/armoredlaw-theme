@@ -1,4 +1,8 @@
 .quote {
+  &__testimonials {
+    display: none;
+  }
+
   &__head {
     text-align: center;
     padding-bottom: 60px;
@@ -297,7 +301,6 @@
   }
 
   &.is-step-3 {
-
     .quote__grid {
       grid-template-columns: 1fr;
     }
@@ -306,6 +309,10 @@
     .quote__progress,
     .quote__head {
       display: none;
+    }
+
+    + .quote__testimonials {
+      display: block;
     }
   }
 

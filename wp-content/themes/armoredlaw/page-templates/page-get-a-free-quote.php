@@ -34,8 +34,6 @@ $step3_btn1_text = get_field('quote_step3_btn1_text');
 $step3_btn1_url  = get_field('quote_step3_btn1_page');
 $step3_btn2_text = get_field('quote_step3_btn2_text');
 $step3_btn2_url  = get_field('quote_step3_btn2_page');
-
-
 ?>
 
 <section class="quote" id="quoteForm">
@@ -163,6 +161,10 @@ $step3_btn2_url  = get_field('quote_step3_btn2_page');
       </form>
     </div>
   </div>
+</section>
+
+<section class="quote__testimonials">
+	<?php get_template_part('template-parts/testimonials'); ?>
 </section>
 
 <script>

@@ -1,17 +1,15 @@
 <?php
-// inc/quote-form-endpoints.php
-
 add_action('wp_ajax_nopriv_al_quote_submit', 'al_quote_submit');
 add_action('wp_ajax_al_quote_submit', 'al_quote_submit');
 
 function al_quote_submit() {
-  // Security
+  // Security check
   $nonce = $_POST['nonce'] ?? '';
   if (!wp_verify_nonce($nonce, 'al_quote_submit')) {
     wp_send_json_error(['message' => 'Invalid nonce'], 403);
   }
 
-  $raw = $_POST['data'] ?? '';
+  $raw  = $_POST['data'] ?? '';
   $data = json_decode(stripslashes($raw), true);
 
   if (!is_array($data)) {
@@ -26,7 +24,7 @@ function al_quote_submit() {
     }
   }
 
-  // TODO: sanitize
+  // Build sanitized payload
   $payload = [
     'protection_type' => sanitize_text_field($data['protection_type']),
     'has_ccw'         => sanitize_text_field($data['has_ccw']),
@@ -39,31 +37,30 @@ function al_quote_submit() {
     'page_url'        => esc_url_raw($data['page_url'] ?? ''),
   ];
 
-  // === РЕЖИМ 1: Заглушка (поки HubSpot нема) ===
-  error_log('[QUOTE SUBMIT] ' . print_r($payload, true));
+  // === MODE 1: Stub (HubSpot not connected yet) ===
   wp_send_json_success(['message' => 'Saved (stub)']);
   return;
 
-  // === РЕЖИМ 2: HubSpot Forms API ===
-  // portalId/formId краще тягнути з ACF options або з цієї сторінки
-	// $portal_id = get_field('hs_portal_id', get_the_ID());
-	// $form_id   = get_field('hs_form_id', get_the_ID());
+  // === MODE 2: HubSpot Forms API ===
+  // portalId / formId should be retrieved from ACF options or from the current page
+  // $portal_id = get_field('hs_portal_id', get_the_ID());
+  // $form_id   = get_field('hs_form_id', get_the_ID());
 
-	//   if (!$portal_id || !$form_id) {
-	//     wp_send_json_error(['message' => 'HubSpot form is not configured'], 500);
-	//   }
+  // if (!$portal_id || !$form_id) {
+  //   wp_send_json_error(['message' => 'HubSpot form is not configured'], 500);
+  // }
 
-  //$hs = al_quote_build_hubspot_payload($payload);
+  // $hs = al_quote_build_hubspot_payload($payload);
 
-  //$endpoint = "https://api.hsforms.com/submissions/v3/integration/submit/{$portal_id}/{$form_id}";
+  // $endpoint = "https://api.hsforms.com/submissions/v3/integration/submit/{$portal_id}/{$form_id}";
 
-	//   $res = wp_remote_post($endpoint, [
-	//     'timeout' => 15,
-	//     'headers' => [
-	//       'Content-Type' => 'application/json'
-	//     ],
-	//     'body' => wp_json_encode($hs),
-	//   ]);
+  // $res = wp_remote_post($endpoint, [
+  //   'timeout' => 15,
+  //   'headers' => [
+  //     'Content-Type' => 'application/json'
+  //   ],
+  //   'body' => wp_json_encode($hs),
+  // ]);
 
   if (is_wp_error($res)) {
     wp_send_json_error(['message' => $res->get_error_message()], 500);
@@ -84,22 +81,22 @@ function al_quote_submit() {
 }
 
 function al_quote_build_hubspot_payload(array $p): array {
-  // HubSpot очікує fields[] з name/value
-  // ВАЖЛИВО: name має збігатися з internal name полів у HubSpot Form
+  // HubSpot expects fields[] with name/value pairs
+  // IMPORTANT: field names must match the internal names in the HubSpot form
   $fields = [
     ['name' => 'firstname', 'value' => al_quote_firstname($p['full_name'])],
     ['name' => 'lastname',  'value' => al_quote_lastname($p['full_name'])],
     ['name' => 'email',     'value' => $p['email']],
     ['name' => 'phone',     'value' => $p['phone']],
 
-    // кастомні поля (мають існувати в HubSpot як properties + додані у form)
+    // Custom fields (must exist in HubSpot as properties and be added to the form)
     ['name' => 'protection_type', 'value' => $p['protection_type']],
     ['name' => 'has_ccw',         'value' => $p['has_ccw']],
     ['name' => 'state',           'value' => $p['state']],
     ['name' => 'plan',            'value' => $p['plan']],
   ];
 
-  // UTM як окремі hidden fields, якщо вони є у формі:
+  // Add UTM parameters as hidden fields if they exist in the form
   if (!empty($p['utm']['utm_source']))   $fields[] = ['name'=>'utm_source',   'value'=>$p['utm']['utm_source']];
   if (!empty($p['utm']['utm_medium']))   $fields[] = ['name'=>'utm_medium',   'value'=>$p['utm']['utm_medium']];
   if (!empty($p['utm']['utm_campaign'])) $fields[] = ['name'=>'utm_campaign', 'value'=>$p['utm']['utm_campaign']];
@@ -111,10 +108,10 @@ function al_quote_build_hubspot_payload(array $p): array {
     'context' => [
       'pageUri'  => $p['page_url'] ?: home_url('/get-a-free-quote/'),
       'pageName' => 'Get a Free Quote',
-      // 'hutk' => $_COOKIE['hubspotutk'] ?? null, // якщо треба, але cookie може бути відсутня
-      // 'ipAddress' => $_SERVER['REMOTE_ADDR'] ?? null, // обережно з privacy
+      // 'hutk' => $_COOKIE['hubspotutk'] ?? null, // optional, cookie may be missing
+      // 'ipAddress' => $_SERVER['REMOTE_ADDR'] ?? null, // be careful with privacy
     ],
-    // Якщо HubSpot вимагає legal consent:
+    // If HubSpot requires legal consent:
     // 'legalConsentOptions' => [...]
   ];
 }
@@ -123,6 +120,7 @@ function al_quote_firstname(string $full): string {
   $parts = preg_split('/\s+/', trim($full));
   return $parts[0] ?? $full;
 }
+
 function al_quote_lastname(string $full): string {
   $parts = preg_split('/\s+/', trim($full));
   array_shift($parts);

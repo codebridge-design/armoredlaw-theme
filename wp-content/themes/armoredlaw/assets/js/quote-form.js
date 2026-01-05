@@ -55,6 +55,19 @@
             quoteSection.classList.toggle('is-step-3', n === 3);
         }
 
+        if (n === 3 && window.jQuery) {
+            const $ = window.jQuery;
+
+            setTimeout(() => {
+                const $slider = $('.testimonials__slider');
+                if ($slider.length && $slider.hasClass('slick-initialized')) {
+                    $slider.slick('setPosition');
+                    $slider.slick('refresh');
+                }
+            }, 50);
+        }
+
+
         steps.forEach(el => {
             const isCurrent = String(n) === el.dataset.step;
             el.hidden = !isCurrent;
@@ -121,10 +134,10 @@
         submitBtn.classList.add('is-loading');
 
         try {
-            // оновимо page_url на момент submit
+            // Update page_url at the moment of submit
             state.data.page_url = window.location.href;
 
-            // (дебаг на 1 хвилину, якщо треба)
+            // (Temporary debug if needed)
             // console.log('AL_QUOTE', window.AL_QUOTE);
 
             const res = await fetch(window.AL_QUOTE.ajaxUrl, {
@@ -143,9 +156,9 @@
                 throw new Error(m);
             }
 
-            // success:
-            // 1) фіксуємо thank you через URL
-            // 2) чистимо state, щоб не застрягати на step 3 при новому вході
+            // Success:
+            // 1) Persist thank-you state via URL
+            // 2) Clear saved state to avoid getting stuck on step 3 on next visit
             setSentUrlParam();
             try { sessionStorage.removeItem(storageKey); } catch (e) {}
 
@@ -171,7 +184,7 @@
                 setMessage(err, 'error', 1);
                 return;
             }
-            setMessage('', 'error', 1); // очистити помилку
+            setMessage('', 'error', 1); // clear step 1 error
             return showStep(2);
         }
 
@@ -179,7 +192,7 @@
             return showStep(1);
         }
 
-        // option buttons
+        // Option buttons
         const group = btn.closest('[data-field]');
         if (!group) return;
 
@@ -224,11 +237,11 @@
     });
 
     // --- init ---
-    // 1) якщо ?quote=sent → показуємо THANK YOU без state
-    // 2) якщо без параметра → можна підхопити прогрес з sessionStorage,
-    //    але якщо там був step 3 — скидаємо на step 1 (щоб не застрягати)
+    // 1) If ?quote=sent is present → show THANK YOU without restoring state
+    // 2) If no parameter → restore progress from sessionStorage,
+    //    but reset to step 1 if step 3 was previously saved (avoid being stuck)
     if (isSentPage()) {
-        getUTM(); // не шкодить
+        getUTM(); // safe to collect UTM
         showStep(3);
         return;
     }
@@ -236,13 +249,13 @@
     loadState();
     getUTM();
 
-    // Якщо раптом в sessionStorage залишився step 3 — скидаємо на step 1
+    // If step 3 is still saved in sessionStorage, reset to step 1
     if (state.step === 3) {
         state.step = 1;
         saveState();
     }
 
-    // Restore UI from state
+    // Restore UI from saved state
     root.querySelectorAll('[data-field="protection_type"],[data-field="has_ccw"],[data-field="plan"]').forEach(group => {
         const field = group.dataset.field;
         const value = state.data[field];

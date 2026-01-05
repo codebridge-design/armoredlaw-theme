@@ -50,7 +50,6 @@ function armoredlaw_enqueue_assets() {
     'nonce' => wp_create_nonce('armoredlaw_load_more'),
   ]);
 
-
   // === GET A FREE QUOTE PAGE ===
   if (is_page_template('page-templates/page-get-a-free-quote.php')) {
 
