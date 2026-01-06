@@ -41,7 +41,6 @@ if ( is_array( $hero_bg_image ) && isset( $hero_bg_image['url'] ) ) {
 			<?php if ( $hero_title ) : ?>
 				<h1 class="hero__title">
 					<?php
-					// textarea → <br> між рядками
 					echo nl2br( esc_html( $hero_title ) );
 					?>
 				</h1>

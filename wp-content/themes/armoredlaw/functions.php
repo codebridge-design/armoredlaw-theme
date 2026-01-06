@@ -4,11 +4,11 @@
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
-    exit;
+  exit;
 }
 
 /**
- * Enqueue styles & fonts
+ * Enqueue styles & scripts
  */
 function armoredlaw_enqueue_assets() {
   $theme_dir = get_template_directory();
@@ -50,6 +50,23 @@ function armoredlaw_enqueue_assets() {
     'nonce' => wp_create_nonce('armoredlaw_load_more'),
   ]);
 
+  // === STATE LAWS / RECIPROCITY MAP (GLOBAL) ===
+  // This script should be available on any page where #alMapWrap and #alStateSelect exist.
+  $state_laws_js = $theme_dir . '/assets/js/state-laws.js';
+  if (file_exists($state_laws_js)) {
+    wp_enqueue_script(
+      'al-state-laws',
+      $theme_uri . '/assets/js/state-laws.js',
+      ['armoredlaw-main'], // safer order; change to [] only if you're 100% sure it's fully independent
+      filemtime($state_laws_js),
+      true
+    );
+
+    wp_localize_script('al-state-laws', 'AL_STATE_LAWS', [
+      'restUrl' => rest_url('armoredlaw/v1/state-laws/'),
+    ]);
+  }
+
   // === GET A FREE QUOTE PAGE ===
   if (is_page_template('page-templates/page-get-a-free-quote.php')) {
 
@@ -74,43 +91,57 @@ function armoredlaw_enqueue_assets() {
 }
 add_action('wp_enqueue_scripts', 'armoredlaw_enqueue_assets');
 
-// === AJAX ENDPOINT ===
+
+// =====================================
+// Includes
+// =====================================
+
+// AJAX endpoint(s) (quote form etc.)
 require_once get_template_directory() . '/inc/quote-form-endpoints.php';
 
-/**
- * Theme supports
- */
+// Helpers / modules
+require_once get_template_directory() . '/inc/membership-pricing-helpers.php';
+require_once get_template_directory() . '/inc/helpers/states.php';
+
+// State laws module (helper + ACF hooks should live there if you move them later)
+require_once get_template_directory() . '/inc/state-laws.php';
+
+// =====================================
+// Theme supports
+// =====================================
 function armoredlaw_theme_setup() {
-	add_theme_support( 'title-tag' );
-	add_theme_support( 'post-thumbnails' );
-	add_theme_support(
-		'html5',
-		array( 'search-form', 'comment-form', 'comment-list', 'gallery', 'caption' )
-	);
+  add_theme_support( 'title-tag' );
+  add_theme_support( 'post-thumbnails' );
+  add_theme_support(
+    'html5',
+    array( 'search-form', 'comment-form', 'comment-list', 'gallery', 'caption' )
+  );
 
-	add_theme_support( 'custom-logo', array(
-		'height'      => 60,
-		'width'       => 200,
-		'flex-width'  => true,
-		'flex-height' => true,
-	) );
+  add_theme_support( 'custom-logo', array(
+    'height'      => 60,
+    'width'       => 200,
+    'flex-width'  => true,
+    'flex-height' => true,
+  ) );
 
-	register_nav_menus(
-		array(
-			'primary'           => __( 'Primary Menu', 'armoredlaw' ),
-			'footer_membership' => __( 'Footer Membership Menu', 'armoredlaw' ),
-			'footer_company'    => __( 'Footer Company Menu', 'armoredlaw' ),
-			'footer_train'      => __( 'Footer Train & Learn Menu', 'armoredlaw' ),
-		)
-	);
-
-	register_nav_menus([
-    'blog_quick_links' => __('Blog Quick Links', 'armoredlaw'),
+  // Menus (merged into one call, no duplicates)
+  register_nav_menus([
+    'primary'           => __( 'Primary Menu', 'armoredlaw' ),
+    'footer_membership' => __( 'Footer Membership Menu', 'armoredlaw' ),
+    'footer_company'    => __( 'Footer Company Menu', 'armoredlaw' ),
+    'footer_train'      => __( 'Footer Train & Learn Menu', 'armoredlaw' ),
+    'blog_quick_links'  => __( 'Blog Quick Links', 'armoredlaw' ),
   ]);
 }
 add_action( 'after_setup_theme', 'armoredlaw_theme_setup' );
 
+
+// =====================================
+// Taxonomies & CPT
+// =====================================
 add_action('init', function () {
+
+  // Blog taxonomy: Content Types
   register_taxonomy('content_type', ['post'], [
     'labels' => [
       'name'          => __('Content Types', 'armoredlaw'),
@@ -123,11 +154,34 @@ add_action('init', function () {
     'hierarchical'      => false,
     'rewrite'           => ['slug' => 'content-type'],
   ]);
+
+  // CPT: State Laws (States)
+  register_post_type('state_laws', [
+    'labels' => [
+      'name'          => 'State Laws (States)',
+      'singular_name' => 'State Law',
+    ],
+    'public'       => false,
+    'show_ui'      => true,
+    'menu_icon'    => 'dashicons-location-alt',
+    'supports'     => ['title'],
+    'show_in_rest' => false,
+  ]);
 });
 
 
-//(optional) remove the admin bar on the front
-add_filter( 'show_admin_bar', '__return_false' );
+// =====================================
+// Admin bar (don't kill it for admins)
+// =====================================
+add_filter('show_admin_bar', function ($show) {
+  // Keep admin bar for admins; hide for everyone else
+  return current_user_can('manage_options') ? $show : false;
+});
+
+
+// =====================================
+// Shortcodes
+// =====================================
 
 // Reciprocity map shortcode
 add_shortcode('armoredlaw_map', function () {
@@ -138,9 +192,9 @@ add_shortcode('armoredlaw_map', function () {
 
 // Testimonials shortcode
 add_shortcode('armoredlaw_testimonials', function () {
-	ob_start();
-	get_template_part('template-parts/testimonials');
-	return ob_get_clean();
+  ob_start();
+  get_template_part('template-parts/testimonials');
+  return ob_get_clean();
 });
 
 // Membership pricing shortcode
@@ -161,9 +215,10 @@ add_shortcode('armoredlaw_small_pricing', function () {
   return ob_get_clean();
 });
 
-require_once get_template_directory() . '/inc/membership-pricing-helpers.php';
-require_once get_template_directory() . '/inc/helpers/states.php';
 
+// =====================================
+// Body class helpers
+// =====================================
 add_filter('body_class', function ($classes) {
   if (is_page('thank-you')) {
     $classes[] = 'page-thank-you';
@@ -171,7 +226,10 @@ add_filter('body_class', function ($classes) {
   return $classes;
 });
 
-//Redirect Forgot password page
+
+// =====================================
+// Redirect: Forgot password page
+// =====================================
 add_action('template_redirect', function () {
   if (is_admin() || wp_doing_ajax()) return;
 
@@ -181,6 +239,10 @@ add_action('template_redirect', function () {
   }
 });
 
+
+// =====================================
+// AJAX: Load more posts
+// =====================================
 add_action('wp_ajax_armoredlaw_load_more_posts', 'armoredlaw_load_more_posts');
 add_action('wp_ajax_nopriv_armoredlaw_load_more_posts', 'armoredlaw_load_more_posts');
 
@@ -192,8 +254,10 @@ function armoredlaw_load_more_posts() {
   }
 
   $page = isset($_POST['page']) ? max(1, (int) $_POST['page']) : 1;
+
   $exclude_csv = isset($_POST['exclude']) ? (string) $_POST['exclude'] : '';
   $exclude_ids = array_filter(array_map('intval', explode(',', $exclude_csv)));
+
   $content_type = isset($_POST['content_type']) ? sanitize_text_field($_POST['content_type']) : '';
   $date_raw     = isset($_POST['date']) ? sanitize_text_field($_POST['date']) : '';
   $search       = isset($_POST['s']) ? sanitize_text_field($_POST['s']) : '';
@@ -236,8 +300,12 @@ function armoredlaw_load_more_posts() {
 
   $q = new WP_Query($args);
 
+  // Better contract: no posts is not an error
   if (!$q->have_posts()) {
-    wp_send_json_error(['message' => 'No more posts']);
+    wp_send_json_success([
+      'html' => '',
+      'max'  => 0,
+    ]);
   }
 
   ob_start();
@@ -251,3 +319,33 @@ function armoredlaw_load_more_posts() {
     'max'  => (int) $q->max_num_pages,
   ]);
 }
+
+
+// =====================================
+// ACF: populate topic_key choices from State Laws page template (guarded)
+// =====================================
+add_filter('acf/load_field/name=topic_key', function ($field) {
+
+  if (!function_exists('get_field')) {
+    return $field;
+  }
+
+  $field['choices'] = [];
+
+  $page_id = function_exists('al_get_state_laws_page_id') ? al_get_state_laws_page_id() : 0;
+  if (!$page_id) return $field;
+
+  $topics = get_field('al_topics', $page_id);
+
+  if (is_array($topics)) {
+    foreach ($topics as $row) {
+      $key   = isset($row['key']) ? sanitize_key($row['key']) : '';
+      $label = $row['label'] ?? '';
+      if ($key && $label) {
+        $field['choices'][$key] = $label;
+      }
+    }
+  }
+
+  return $field;
+});
