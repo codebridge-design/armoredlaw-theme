@@ -15,6 +15,7 @@
     position: absolute;
     top: -50px;
     margin: 0 !important;
+    left: 0;
   }
 
   .mepr_error,
@@ -206,6 +207,40 @@
         }
       }
     }
+  }
+
+  .mepr-form-has-errors,
+  .cc-error,
+  .mepr-validation-error {
+    color: @color-red;
+  }
+
+  input.invalid, select.invalid, textarea.invalid, label.mepr-checkbox-field.invalid,
+  div.mepr-checkboxes-field.invalid, div.mepr-radios-field.invalid {
+    border: 2px solid @color-red !important;
+    background-color: transparent !important;
+  }
+
+  .mp-nopass {
+    background: none;
+    border: none;
+    color: #989898;
+    text-align: left;
+  }
+
+  .mp-weakpass {
+    background: none;
+    border: none;
+    color: #ffa500;
+    text-align: left;
+  }
+
+  .mp-strongpass,
+  .mp-mediumpass {
+    background: none;
+    border: none;
+    color: #4d8c2e;
+    text-align: left;
   }
 }
 
