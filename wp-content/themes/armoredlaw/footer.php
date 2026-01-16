@@ -25,7 +25,7 @@ $footer_subscribe_desc = get_field( 'footer_subscribe_desc', 'option' );
 
 <footer class="site-footer">
 
-	<section class="site-footer__top">
+	<section class="site-footer__top" id="support">
 		<div class="container site-footer__top-inner">
 
 			<div class="footer-brand">
